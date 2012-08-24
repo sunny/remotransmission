@@ -1,0 +1,104 @@
+#!/usr/bin/env ruby
+# RemoTransmission command line interface to control
+# a remote transmission client.
+#
+# Examples:
+#   $ remotransmission -p PaSsWord --add 'magnet://...'
+#   success
+#   $ remotransmission -p PaSsWord --server 214.512.12.20 --port 9092 --list
+#   100% - ubuntu-10.10-desktop-i386.iso
+#   100% - ubuntu-10.10-server-i386.iso
+
+
+require 'remotransmission'
+
+Choice.options do
+  header ""
+  header 'Commands:'
+  option :add do
+    short '-a'
+    long '--add=URL'
+    desc 'Add a torrent by its URL'
+  end
+
+  option :list do
+    short '-l'
+    long '--list'
+    desc "List current torrents"
+  end
+
+  option :help do
+    #short '-h'
+    long '--help'
+    desc 'Show this message'
+  end
+
+  option :version do
+    long '--version'
+    desc 'Show version'
+    action do
+      puts "RemoTransmission #{RemoTransmission::Version::STRING}"
+      exit
+    end
+  end
+
+  separator ""
+  separator 'Common options:'
+  option :host do
+    short '-s'
+    long '--server=IP'
+    desc 'The hostname or ip of the host to bind to (default 192.168.0.254)'
+    default '192.168.0.254'
+  end
+
+  option :port do
+    long '--port=PORT'
+    desc 'The port to bind to (default 9091)'
+    cast Integer
+    default 9091
+  end
+
+  option :user do
+    short '-u'
+    long '--user=USER'
+    desc 'User to authenticate (default freebox)'
+    default 'freebox'
+  end
+
+  option :password do
+    short '-p'
+    long '--password=PASSWORD'
+    desc 'Password to authenticate'
+  end
+
+  option :debug do
+    short '-d'
+    long '--debug'
+    desc 'Enable debug mode'
+  end
+
+  separator ""
+  separator "Examples:"
+  separator "    $ #{File.basename($0)} -p PaSsWord --add 'magnet://...'"
+  separator "    success"
+  separator "    $ #{File.basename($0)} -p PaSsWord --server 214.512.12.20 --port 9092 --list"
+  separator "    100% - ubuntu-10.10-desktop-i386.iso"
+  separator "    100% - ubuntu-10.10-server-i386.iso"
+end
+
+
+client = RemoTransmission::Client.new(
+  Choice[:host],
+  Choice[:port],
+  Choice[:user],
+  Choice[:password],
+  Choice[:debug]
+)
+
+if Choice[:add]
+  client.add(Choice[:add])
+elsif Choice[:list]
+  client.list
+else
+  Choice.help
+end
