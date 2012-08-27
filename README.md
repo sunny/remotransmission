@@ -3,6 +3,8 @@ RemoTransmission
 
 A command line interface for remote transmission.
 
+Can add a torrent and list the current torrents with their percentage.
+
 Install
 -------
 
@@ -14,13 +16,6 @@ Usage
 -----
 
 ```sh
-$ remotransmission -p PaSsWord --add 'magnet://...'
-success
-
-$ remotransmission -p PaSsWord --server 214.512.12.20 --port 9092 --list
-100% - ubuntu-10.10-desktop-i386.iso
-100% - ubuntu-10.10-server-i386.iso
-
 $ remotransmission -h
 Usage: remotransmission [-alsupd]
 
@@ -36,11 +31,23 @@ Common options:
     -u, --user=USER                  User to authenticate (default freebox)
     -p, --password=PASSWORD          Password to authenticate
     -d, --debug                      Enable debug mode
+```
 
-Examples:
-    $ remotransmission -p PaSsWord --add 'magnet://...'
-    success
-    $ remotransmission -p PaSsWord --server 214.512.12.20 --port 9092 --list
-    100% - ubuntu-10.10-desktop-i386.iso
-    100% - ubuntu-10.10-server-i386.iso
+Examples
+--------
+
+Adding a magnet URL with the default host and port and user (`192.168.0.254`,
+`9091` and `freebox`) and specifying a password:
+
+```sh
+$ remotransmission -p PaSsWord --add 'magnet://...'
+success
+```
+
+List all current torrents by specifying the hostname, user and password:
+
+```sh
+$ remotransmission -u bob -p PaSsWord -s 214.512.12.20 --list
+100% - ubuntu-10.10-desktop-i386.iso
+80% - ubuntu-10.10-server-i386.iso
 ```
