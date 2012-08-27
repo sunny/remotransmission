@@ -82,7 +82,7 @@ class RemoTransmission::Client
 
       if exit_status.to_i > 0
         err = err.chomp if err
-        raise ShellError, err
+        raise RemoTransmission::ShellError, err
       elsif out
         out.chomp
       else
@@ -98,7 +98,7 @@ class RemoTransmission::Client
       json = JSON.parse(curl)
       debug(json)
       json
-    rescue ShellError => e
+    rescue RemoTransmission::ShellError => e
       puts e.message
       exit 1
     end
