@@ -8,7 +8,9 @@ require 'remotransmission'
 defaults = RemoTransmission::default_options("~/.config/remotransmission/settings.json")
 
 Choice.options do
-  header ""
+  banner "RemoTransmission v#{RemoTransmission::VERSION}\n"
+  banner "Usage: remotransmission [options...] <command>"
+  header ''
   header 'Commands:'
   option :add do
     short '-a'
@@ -22,22 +24,8 @@ Choice.options do
     desc "List current torrents"
   end
 
-  option :help do
-    long '--help'
-    desc 'Show this message'
-  end
-
-  option :version do
-    long '--version'
-    desc 'Show version'
-    action do
-      puts "RemoTransmission #{RemoTransmission::Version::STRING}"
-      exit
-    end
-  end
-
   separator ""
-  separator 'Common options:'
+  separator 'Options:'
   option :host do
     long '--host=IP'
     desc "The hostname or ip of the server to connect to (default #{defaults[:host].inspect})"
@@ -69,7 +57,7 @@ Choice.options do
   option :debug do
     short '-d'
     long '--debug'
-    desc "Enable debug mode (default #{defaults[:debug].inspect})"
+    desc "Enable debug mode"
     default defaults[:debug]
   end
 
@@ -81,6 +69,7 @@ Choice.options do
   separator "    100% - ubuntu-10.10-desktop-i386.iso"
   separator "    100% - ubuntu-10.10-server-i386.iso"
 end
+
 
 options = {
   host: Choice[:host],

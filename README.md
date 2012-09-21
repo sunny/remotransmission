@@ -17,7 +17,7 @@ Usage
 
 ```sh
 $ remotransmission
-Usage: remotransmission [-alsupd]
+Usage: remotransmission [options...] <command>
 
 Commands:
     -a, --add=URL                    Add a torrent by its URL
@@ -25,7 +25,7 @@ Commands:
         --help                       Show this message
         --version                    Show version
 
-Common options:
+Options:
         --host=IP                    The hostname or ip of the server to connect to (default "localhost")
         --port=PORT                  The port to bind to (default 9091)
     -u, --user=USER                  User to authenticate (default "freebox")
@@ -73,23 +73,18 @@ Development
 Running remotransmission locally:
 
 ```sh
-$ ruby -Ilib bin/remotransmission
+$ bundle
+$ bundle exec remotransmission
 ```
 
-Building and installing the gem:
+Build, install and release the gem through rake tasks.
 
 ```sh
-$ rm remotransmission-*.gem
-$ gem uninstall remotransmission
-$ gem build remotransmission.gemspec
-$ gem install remotransmission-*.gem
+$ rake -T
 ```
 
-Pushing a new version:
+Credit
+------
 
-```sh
-$ gem push remotransmission-*.gem
-$ git tag v1.0.0
-$ git push
-$ git push --tags
-```
+- Authors : Sunny Ripert <sunny@sunfox.org>
+- License : [[MIT|http://opensource.org/licenses/MIT]]

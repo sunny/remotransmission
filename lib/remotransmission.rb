@@ -1,5 +1,8 @@
 require 'json'
 require 'net/http'
+require 'remotransmission/version'
+require 'remotransmission/remote'
+require 'remotransmission/client'
 
 module RemoTransmission
   DEFAULT_OPTIONS = {
@@ -32,11 +35,5 @@ module RemoTransmission
 
     defaults
   end
-
-  # :nodoc:
-  class ShellError < StandardError; end
 end
 
-require 'remotransmission/version'
-require 'remotransmission/remote'
-require 'remotransmission/client'
