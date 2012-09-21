@@ -3,17 +3,21 @@ class RemoTransmission::Client
   # Initialize a remote transmission
   #
   # Arguments:
-  #   host: host to connect to (String)
-  #   port: port to connect to (Integer)
-  #   user: username to authenticate to (String)
-  #   password: password to authenticate to (String)
-  #   debug: flag to turn on debugging (Integer)
-  def initialize(host = "localhost", port = 9091, user = "", password = "", debug = false)
-    @host = host
-    @port = port
-    @user = user
-    @password = password
-    @debug = debug
+  #   options hash
+  #
+  # Options:
+  #   :host: host to connect to (String)
+  #   :port: port to connect to (Integer)
+  #   :user: username to authenticate to (String)
+  #   :password: password to authenticate to (String)
+  #   :debug: flag to turn on debugging (Integer)
+  def initialize(options = {})
+    options.merge!(RemoTransmission::DEFAULT_OPTIONS)
+    @host = options[:host]
+    @port = options[:port]
+    @user = options[:user]
+    @password = options[:password]
+    @debug = options[:debug]
   end
 
   # Add a torrent to the transmission client

@@ -1,16 +1,10 @@
 #!/usr/bin/env ruby
 # RemoTransmission command line interface to control
 # a remote transmission client.
-#
-# Examples:
-#   $ remotransmission -p PaSsWord --add 'magnet://...'
-#   success
-#   $ remotransmission -p PaSsWord --server 214.512.12.20 --port 9092 --list
-#   100% - ubuntu-10.10-desktop-i386.iso
-#   100% - ubuntu-10.10-server-i386.iso
-
 
 require 'remotransmission'
+
+defaults = RemoTransmission::default_options("~/.config/remotransmission/settings.json")
 
 Choice.options do
   header ""
@@ -28,7 +22,6 @@ Choice.options do
   end
 
   option :help do
-    #short '-h'
     long '--help'
     desc 'Show this message'
   end
@@ -45,55 +38,58 @@ Choice.options do
   separator ""
   separator 'Common options:'
   option :host do
-    short '-s'
-    long '--server=IP'
-    desc 'The hostname or ip of the host to bind to (default 192.168.0.254)'
-    default '192.168.0.254'
+    long '--host=IP'
+    desc "The hostname or ip of the server to connect to (default #{defaults[:host].inspect})"
+    default defaults[:host]
   end
 
   option :port do
     long '--port=PORT'
-    desc 'The port to bind to (default 9091)'
+    desc "The port to bind to (default #{defaults[:port].inspect})"
     cast Integer
-    default 9091
+    default defaults[:port]
   end
 
   option :user do
     short '-u'
     long '--user=USER'
-    desc 'User to authenticate (default freebox)'
+    desc "User to authenticate (default #{defaults[:user].inspect})"
     default 'freebox'
+    default defaults[:user]
   end
 
   option :password do
     short '-p'
     long '--password=PASSWORD'
-    desc 'Password to authenticate'
+    desc "Password to authenticate"
+    default defaults[:password]
   end
 
   option :debug do
     short '-d'
     long '--debug'
-    desc 'Enable debug mode'
+    desc "Enable debug mode (default #{defaults[:debug].inspect})"
+    default defaults[:debug]
   end
 
   separator ""
   separator "Examples:"
-  separator "    $ #{File.basename($0)} -p PaSsWord --add 'magnet://...'"
+  separator "    $ #{File.basename($0)} --add 'magnet://...'"
   separator "    success"
-  separator "    $ #{File.basename($0)} -p PaSsWord --server 214.512.12.20 --port 9092 --list"
+  separator "    $ #{File.basename($0)} -p PaSsWord --host 192.168.0.254 --list"
   separator "    100% - ubuntu-10.10-desktop-i386.iso"
   separator "    100% - ubuntu-10.10-server-i386.iso"
 end
 
+options = {
+  host: Choice[:host],
+  port: Choice[:port],
+  user: Choice[:user],
+  password: Choice[:password],
+  debug: Choice[:debug]
+}
 
-client = RemoTransmission::Client.new(
-  Choice[:host],
-  Choice[:port],
-  Choice[:user],
-  Choice[:password],
-  Choice[:debug]
-)
+client = RemoTransmission::Client.new(options)
 
 if Choice[:add]
   client.add(Choice[:add])
