@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.email       = 'sunny@sunfox.org'
   s.files       << "lib/remotransmission.rb"
   s.files       << "lib/remotransmission/client.rb"
+  s.files       << "lib/remotransmission/remote.rb"
   s.files       << "lib/remotransmission/version.rb"
   s.executables << 'remotransmission'
   s.homepage    = 'http://github.com/sunny/remotransmission'

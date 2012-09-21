@@ -66,3 +66,21 @@ To set any global option you can create a `~/.config/remotransmission/settings.j
   "debug": true
 }
 ```
+
+Development
+-----------
+
+Running remotransmission locally:
+
+```sh
+$ ruby -Ilib bin/remotransmission
+```
+
+Building and installing the gem:
+
+```sh
+$ gem build remotransmission.gemspec
+$ gem uninstall remotransmission
+$ gem install remotransmission-*.gem
+$ rm remotransmission-*.gem
+```
