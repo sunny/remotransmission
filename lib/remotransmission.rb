@@ -11,8 +11,8 @@ module RemoTransmission
     debug: false
   }.freeze
 
-  # Returns the default options hash, optionnaly pulled from a
-  # configuration file in
+  # Returns the default options hash, optionnaly pulled from the given
+  # configuration file.
   #
   # Arguments:
   #   file: path to JSON configuration file
@@ -38,5 +38,6 @@ module RemoTransmission
   class ShellError < StandardError; end
 end
 
-require 'remotransmission/client'
 require 'remotransmission/version'
+require 'remotransmission/remote'
+require 'remotransmission/client'
