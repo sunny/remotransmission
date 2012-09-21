@@ -12,7 +12,8 @@ class RemoTransmission::Remote
   #   :password: password to authenticate to (String)
   #   :debug: flag to turn on debugging (Integer)
   def initialize(options = {})
-    options.merge!(RemoTransmission::DEFAULT_OPTIONS)
+    defaults = RemoTransmission::DEFAULT_OPTIONS
+    options = defaults.merge(options)
     @host = options[:host]
     @port = options[:port]
     @user = options[:user]
@@ -55,13 +56,13 @@ class RemoTransmission::Remote
 
   private
 
-    def command(*cmd)
-      debug *cmd
+    def command(command)
+      debug command
       exit_status = nil
       err = nil
       out = nil
 
-      Open3.popen3(*cmd) do |stdin, stdout, stderr, wait_thread|
+      Open3.popen3(command) do |stdin, stdout, stderr, wait_thread|
         err = stderr.gets(nil)
         out = stdout.gets(nil)
         [stdin, stdout, stderr].each { |stream|
