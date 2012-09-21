@@ -16,7 +16,7 @@ Usage
 -----
 
 ```sh
-$ remotransmission -h
+$ remotransmission
 Usage: remotransmission [-alsupd]
 
 Commands:
@@ -79,8 +79,17 @@ $ ruby -Ilib bin/remotransmission
 Building and installing the gem:
 
 ```sh
-$ gem build remotransmission.gemspec
-$ gem uninstall remotransmission
-$ gem install remotransmission-*.gem
 $ rm remotransmission-*.gem
+$ gem uninstall remotransmission
+$ gem build remotransmission.gemspec
+$ gem install remotransmission-*.gem
+```
+
+Pushing a new version:
+
+```sh
+$ gem push remotransmission-*.gem
+$ git tag v1.0.0
+$ git push
+$ git push --tags
 ```
