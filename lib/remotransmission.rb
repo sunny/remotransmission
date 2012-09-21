@@ -1,6 +1,5 @@
-require 'choice'
 require 'json'
-require 'open3'
+require 'net/http'
 
 module RemoTransmission
   DEFAULT_OPTIONS = {

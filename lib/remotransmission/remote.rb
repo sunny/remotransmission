@@ -56,46 +56,18 @@ class RemoTransmission::Remote
 
   private
 
-    def command(command)
-      debug command
-      exit_status = nil
-      err = nil
-      out = nil
-
-      Open3.popen3(command) do |stdin, stdout, stderr, wait_thread|
-        err = stderr.gets(nil)
-        out = stdout.gets(nil)
-        [stdin, stdout, stderr].each { |stream|
-          stream.send('close')
-        }
-        exit_status = wait_thread.value
-      end
-
-      if exit_status.to_i > 0
-        err = err.chomp if err
-        raise RemoTransmission::ShellError, err
-      elsif out
-        out.chomp
-      else
-        true
-      end
-    end
-
     def rpc(options = {})
-      default_options = { arguments: { fields: ["error","errorString","eta","id","isFinished","leftUntilDone","name","peersGettingFromUs","peersSendingToUs","rateDownload","rateUpload","sizeWhenDone","status","uploadRatio"] }, tag: 4 }
-      options = default_options.merge(options).to_json
+      uri = URI("http://#{@host}:#{@port}/transmission/rpc")
+      response = Net::HTTP.start(uri.host, uri.port) do |http|
+        request = Net::HTTP::Post.new(uri.path)
+        request.body = options.to_json
+        request.basic_auth(@user, @password)
+        http.request(request)
+      end
 
-      curl = command("curl -fsS -u #{@user}:#{@password} -d '#{options}' http://#{@host}:#{@port}/transmission/rpc")
-      json = JSON.parse(curl)
-      debug(json)
+      json = JSON.parse(response.body)
+      $stderr.puts json if @debug
       json
-    rescue RemoTransmission::ShellError => e
-      puts e.message
-      exit 1
-    end
-
-    def debug(*obj)
-      puts *obj if @debug
     end
 end
 

@@ -2,6 +2,7 @@
 # RemoTransmission command line interface to control
 # a remote transmission client.
 
+require 'choice'
 require 'remotransmission'
 
 defaults = RemoTransmission::default_options("~/.config/remotransmission/settings.json")

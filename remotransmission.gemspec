@@ -16,5 +16,4 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.add_runtime_dependency "choice", "~> 0.1"
   s.add_runtime_dependency "json", "~> 1.7"
-  s.requirements << "Curl command line"
 end
