@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 
   gem.add_runtime_dependency "choice", "~> 0.1"
-  gem.add_runtime_dependency "json", "~> 1.7.5"
+  gem.add_runtime_dependency "json", "~> 1.8.0"
 
   gem.add_development_dependency "rake"
 end
